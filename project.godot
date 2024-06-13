@@ -10,12 +10,8 @@ config_version=5
 
 [application]
 
-<<<<<<< HEAD
 config/name="TinySword"
 run/main_scene="res://Scenes/TinySword.tscn"
-=======
-config/name="Game 2"
->>>>>>> 41d749e6a8b3412cf8e65681a1c3dd7b31628fd9
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
