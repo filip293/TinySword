@@ -5,12 +5,15 @@ var footstep_timer = 0
 var footstep_interval = 0.25
 var is_right_foot = true
 
+@onready var raycast = $RayCast2D
+
+
 func _ready():
 	pass
 
 func _physics_process(delta):
-	velocity = Vector2(0, 0)
-	#velocity = $/root/Node2D/Level1/UI/Joysrick.get_valo()
+	velocity = Vector2()
+
 	if Input.is_action_pressed("esc"):
 		get_tree().quit()
 
@@ -23,9 +26,9 @@ func _physics_process(delta):
 	elif Input.is_action_pressed("Down"):
 		velocity.y += SPEED
 
-	#if velocity.length() > 0:
-		#velocity = velocity.normalized() * SPEED
-		#
+	if velocity.length() > 0 and Global.chopping == false:
+		velocity = velocity.normalized() * SPEED
+
 		#footstep_timer += delta
 		#if footstep_timer >= footstep_interval:
 			#footstep_timer = 0.0
@@ -34,14 +37,21 @@ func _physics_process(delta):
 				#$RightFoot.play()
 			#else:
 				#$LeftFoot.play()
-			
-
-	if velocity.length() > 0:
+		
 		$Animations.play("Walk")
 		$Animations.flip_h = (velocity.x < 0)
-		$Animations.flip_h = (velocity.x < 0)
 	else:
-		$Animations.play("Idle")
+		if Global.chopping == false:
+			$Animations.play("Idle")
+		
+	if velocity.x < 0:
+		raycast.target_position = Vector2(-80, 0)
+	elif velocity.x > 0:
+		raycast.target_position = Vector2(80, 0)
+		
+	if velocity.y < 0:
+		raycast.target_position = Vector2(0, -80)
+	elif velocity.y > 0:
+		raycast.target_position = Vector2(0, 80)
 
 	move_and_slide()
-
