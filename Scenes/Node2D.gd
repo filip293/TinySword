@@ -25,6 +25,12 @@ func _process(delta):
 
 	# Update previous layer
 	previous_layer = layer
+	
+	if layer == 1:
+		Global.onsand = true
+	else:
+		Global.onsand = false
+	
 
 func get_player_layer(tilemap: TileMap, player_position: Vector2) -> int:
 	# Convert global position to local tilemap position

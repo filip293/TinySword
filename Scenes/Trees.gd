@@ -52,6 +52,7 @@ func drop_wood():
 
 func pick_up():
 	$Wood.play("Pickup")
+	$Wood/Pickup.play()
 	await get_tree().create_timer(0.25).timeout
 	wood_node.queue_free()
 

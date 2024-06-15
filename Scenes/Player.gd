@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 const SPEED = 300
 var footstep_timer = 0
-var footstep_interval = 0.25
+var footstep_interval = 0.3
 var is_right_foot = true
 
 @onready var raycast = $RayCast2D
@@ -14,6 +14,11 @@ func _ready():
 func _physics_process(delta):
 	velocity = Vector2()
 
+
+	if $Theme.is_playing() == false:
+		$Theme.play()
+	
+	
 	if Input.is_action_pressed("esc"):
 		get_tree().quit()
 
@@ -29,14 +34,20 @@ func _physics_process(delta):
 	if velocity.length() > 0 and Global.chopping == false:
 		velocity = velocity.normalized() * SPEED
 
-		#footstep_timer += delta
-		#if footstep_timer >= footstep_interval:
-			#footstep_timer = 0.0
-			#is_right_foot = !is_right_foot
-			#if is_right_foot:
-				#$RightFoot.play()
-			#else:
-				#$LeftFoot.play()
+		footstep_timer += delta
+		if footstep_timer >= footstep_interval:
+			footstep_timer = 0.0
+			is_right_foot = !is_right_foot
+			if Global.onsand == false:
+				if is_right_foot:
+					$RightFoot.play()
+				else:
+					$LeftFoot.play()
+			elif Global.onsand == true:
+				if is_right_foot:
+					$Sand1.play()
+				else:
+					$Sand2.play()
 		
 		$Animations.play("Walk")
 		$Animations.flip_h = (velocity.x < 0)

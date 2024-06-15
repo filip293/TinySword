@@ -1,4 +1,4 @@
-[gd_scene load_steps=128 format=3 uid="uid://yi1y1mq6dltj"]
+[gd_scene load_steps=135 format=3 uid="uid://yi1y1mq6dltj"]
 
 [ext_resource type="Texture2D" uid="uid://bkg34vhyq04n1" path="res://Tiny Swords/Tiny Swords (Update 010)/Terrain/Ground/Tilemap_Flat.png" id="1_htsrl"]
 [ext_resource type="Texture2D" uid="uid://ld3uh3o0y3ew" path="res://Tiny Swords/Tiny Swords (Update 010)/Terrain/Ground/Shadows.png" id="1_ogbet"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://b5mbvegwh37u7" path="res://Tiny Swords/Tiny Swords (Update 010)/Terrain/Bridge/Bridge_All.png" id="9_a4mj6"]
 [ext_resource type="Script" path="res://Scenes/Player.gd" id="10_3psl4"]
 [ext_resource type="Texture2D" uid="uid://ddwsmageerlex" path="res://Tiny Swords/Tiny Swords (Update 010)/Deco/12.png" id="12_7jqx6"]
+[ext_resource type="Script" path="res://Scenes/Node2D.gd" id="12_fnjmk"]
 [ext_resource type="Texture2D" uid="uid://dsvi3ut7d64bb" path="res://Tiny Swords/Tiny Swords (Update 010)/Deco/13.png" id="15_niygs"]
 [ext_resource type="Texture2D" uid="uid://cajxk37848wrs" path="res://Tiny Swords/Tiny Swords (Update 010)/Deco/14.png" id="16_rea17"]
 [ext_resource type="Texture2D" uid="uid://c1hobivkt613i" path="res://Tiny Swords/Tiny Swords (Update 010)/Deco/15.png" id="17_yaepv"]
@@ -31,12 +32,18 @@
 [ext_resource type="Texture2D" uid="uid://djs6ioxckojsw" path="res://Tiny Swords/Tiny Swords (Update 010)/Deco/04.png" id="26_rdvym"]
 [ext_resource type="Texture2D" uid="uid://m1ilcbbx58f" path="res://Tiny Swords/Tiny Swords (Update 010)/Deco/05.png" id="27_3qybq"]
 [ext_resource type="Script" path="res://Scenes/InteractRay.gd" id="31_o6453"]
+[ext_resource type="AudioStream" uid="uid://elrm4puibiq6" path="res://Sounds/Sand1.mp3" id="32_c1xjr"]
+[ext_resource type="AudioStream" uid="uid://dojm1ikodnsy6" path="res://Sounds/Steps_dirt-001.ogg" id="32_s63pw"]
+[ext_resource type="AudioStream" uid="uid://dfacifw28m5y4" path="res://Sounds/Sand2.mp3" id="33_01r44"]
+[ext_resource type="AudioStream" uid="uid://bdfu55curbuag" path="res://Sounds/Steps_dirt-002.ogg" id="33_4n1x0"]
 [ext_resource type="Script" path="res://Scenes/Trees.gd" id="33_hfe0l"]
+[ext_resource type="AudioStream" uid="uid://dv78giy0uxd6u" path="res://Ambiant/KleptoLindaMountainA_Loopable.wav" id="34_7lbxx"]
 [ext_resource type="Texture2D" uid="uid://chuupjgiifrqg" path="res://Tiny Swords/Tiny Swords (Update 010)/Resources/Trees/Tree.png" id="34_53am3"]
 [ext_resource type="AudioStream" uid="uid://dpxgmojv182h1" path="res://Sounds/CutTree.mp3" id="34_us8uf"]
 [ext_resource type="Script" path="res://Scenes/Interactable.gd" id="35_ctqs0"]
 [ext_resource type="Texture2D" uid="uid://c3mrf3cakgtxl" path="res://Tiny Swords/Tiny Swords (Update 010)/Resources/Resources/W_Spawn.png" id="36_3p5i8"]
 [ext_resource type="Texture2D" uid="uid://c7hpyvk15gxba" path="res://Tiny Swords/Tiny Swords (Update 010)/Resources/Resources/W_Idle.png" id="37_lhpd6"]
+[ext_resource type="AudioStream" uid="uid://b0u8kumwchuab" path="res://Sounds/coin-collect-retro-8-bit-sound-effect-145251.mp3" id="41_5nult"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ocdkq"]
 texture = ExtResource("1_rm1vm")
@@ -1043,7 +1050,25 @@ target_position = Vector2(80, 0)
 hit_from_inside = true
 script = ExtResource("31_o6453")
 
+[node name="RightFoot" type="AudioStreamPlayer2D" parent="Player"]
+stream = ExtResource("32_s63pw")
+
+[node name="LeftFoot" type="AudioStreamPlayer2D" parent="Player"]
+stream = ExtResource("33_4n1x0")
+
+[node name="Theme" type="AudioStreamPlayer" parent="Player"]
+stream = ExtResource("34_7lbxx")
+volume_db = -5.962
+autoplay = true
+
+[node name="Sand1" type="AudioStreamPlayer2D" parent="Player"]
+stream = ExtResource("33_01r44")
+
+[node name="Sand2" type="AudioStreamPlayer2D" parent="Player"]
+stream = ExtResource("32_c1xjr")
+
 [node name="Layer" type="Node2D" parent="."]
+script = ExtResource("12_fnjmk")
 
 [node name="TreesInteract" type="Node2D" parent="."]
 z_index = 1
@@ -1093,3 +1118,8 @@ prompt_message = "Wood"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TreesInteract/Trees/Wood/StaticBody2D"]
 position = Vector2(-1.5, 22.5)
 shape = SubResource("RectangleShape2D_6ug73")
+
+[node name="Pickup" type="AudioStreamPlayer2D" parent="TreesInteract/Trees/Wood"]
+position = Vector2(0.000338858, 10)
+rotation = -3.38858e-05
+stream = ExtResource("41_5nult")
