@@ -990,6 +990,7 @@ size = Vector2(49, 31)
 
 [node name="Node2D" type="Node2D"]
 y_sort_enabled = true
+position = Vector2(0, -87)
 
 [node name="Map" type="TileMap" parent="."]
 y_sort_enabled = true
